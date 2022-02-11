@@ -22,6 +22,7 @@ const getBalance = (statement) =>
     (acc, cur) => (cur.type === "credit" ? acc + cur.amount : acc - cur.amount),
     0
   );
+
 app.use(express.json());
 
 app.post("/account", (req, res) => {
