@@ -1,13 +1,22 @@
-import Category from "../models/Category";
-import ICategoriesRepository, {
+import { Category } from "../../models/Category";
+import {
   ICreateCategoryDTO,
+  ICategoriesRepository,
 } from "./ICategoriesRepository";
 
 class CategoriesRepository implements ICategoriesRepository {
   private categories: Category[];
+  private static INSTANCE: CategoriesRepository;
 
-  constructor() {
+  private constructor() {
     this.categories = [];
+  }
+
+  static getInstance(): CategoriesRepository {
+    if (!CategoriesRepository.INSTANCE)
+      CategoriesRepository.INSTANCE = new CategoriesRepository();
+
+    return CategoriesRepository.INSTANCE;
   }
 
   create(dataToCreate: ICreateCategoryDTO): void {
@@ -25,4 +34,4 @@ class CategoriesRepository implements ICategoriesRepository {
   }
 }
 
-export default CategoriesRepository;
+export { CategoriesRepository };

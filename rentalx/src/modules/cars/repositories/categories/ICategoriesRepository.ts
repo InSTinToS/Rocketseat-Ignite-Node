@@ -1,6 +1,6 @@
-import Category from "../models/Category";
+import { Category } from "../../models/Category";
 
-export interface ICreateCategoryDTO {
+interface ICreateCategoryDTO {
   name: string;
   description: string;
 }
@@ -11,4 +11,4 @@ interface ICategoriesRepository {
   create(dataToCreate: ICreateCategoryDTO): void;
 }
 
-export default ICategoriesRepository;
+export { ICategoriesRepository, ICreateCategoryDTO };

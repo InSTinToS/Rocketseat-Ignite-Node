@@ -1,16 +1,14 @@
 import { v4 as uuid } from "uuid";
 
-class Category {
+class Specification {
   id?: string;
   name: string;
   created_at: Date;
   description: string;
 
   constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
+    if (!this.id) this.id = uuid();
   }
 }
 
-export default Category;
+export { Specification };

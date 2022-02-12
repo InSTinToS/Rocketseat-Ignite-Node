@@ -1,4 +1,4 @@
-import ICategoriesRepository from "../repositories/ICategoriesRepository";
+import { ICategoriesRepository } from "../../../repositories/categories/ICategoriesRepository";
 
 interface ICreateCategoryServiceDTO {
   name: string;
@@ -17,4 +17,4 @@ class CreateCategoryService {
   }
 }
 
-export default CreateCategoryService;
+export { CreateCategoryService, ICreateCategoryServiceDTO };
