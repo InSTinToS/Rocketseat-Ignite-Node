@@ -7,11 +7,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(
-  "/api-docs",
-  swagger.serveFiles(swaggerFile),
-  swagger.setup(swaggerFile)
-);
+app.use("/api-docs", swagger.serve, swagger.setup(swaggerFile));
 
 app.use(routes);
 
