@@ -1,7 +1,8 @@
-import { ICategoriesRepository } from "../../../repositories/categories/ICategoriesRepository";
-import fs from "fs";
-import { parse as csvParse } from "csv-parse";
-import { inject, injectable } from "tsyringe";
+import { ICategoriesRepository } from '../../../repositories/categories/ICategoriesRepository'
+
+import { parse as csvParse } from 'csv-parse'
+import fs from 'fs'
+import { inject, injectable } from 'tsyringe'
 
 interface IImportCategory {
   name: string;
@@ -11,7 +12,7 @@ interface IImportCategory {
 @injectable()
 class ImportCategoryService {
   constructor(
-    @inject("categoriesRepository")
+    @inject("CategoriesRepository")
     private categoriesRepository: ICategoriesRepository
   ) {}
 

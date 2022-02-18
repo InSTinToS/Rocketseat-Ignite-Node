@@ -1,12 +1,10 @@
 {
   "openapi": "3.0.0",
   "info": {
+    "version": "1.0.0",
     "title": "RentX Documentation",
     "description": "This is an API Rent",
-    "version": "1.0.0",
-    "contact": {
-      "email": "miguelandradebarreto2@gmail.com"
-    }
+    "contact": { "email": "miguelandradebarreto2@gmail.com" }
   },
   "paths": {
     "/categories": {
@@ -67,10 +65,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
+                  "file": { "type": "string", "format": "binary" }
                 }
               }
             }
@@ -85,11 +80,7 @@
         "summary": "Create a specification",
         "description": "Create a new specification",
         "requestBody": {
-          "content": {
-            "schema": {
-              "$ref": "#/definitions/Specification"
-            }
-          }
+          "content": { "schema": { "$ref": "#/definitions/Specification" } }
         },
         "responses": {
           "201": { "description": "Created" },

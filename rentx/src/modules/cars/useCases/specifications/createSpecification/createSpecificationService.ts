@@ -1,5 +1,6 @@
-import { inject, injectable } from "tsyringe";
-import { ISpecificationsRepository } from "../../../repositories/specifications/ISpecificationsRepository";
+import { ISpecificationsRepository } from '../../../repositories/specifications/ISpecificationsRepository'
+
+import { inject, injectable } from 'tsyringe'
 
 interface ICreateSpecificationDTO {
   name: string;
@@ -18,7 +19,7 @@ class CreateSpecificationService {
       await this.specificationsRepository.findByName(name);
 
     if (specificationAlreadyExists)
-      throw new Error("specification already exists");
+      throw new Error("Specification already exists");
 
     await this.specificationsRepository.create({
       name,

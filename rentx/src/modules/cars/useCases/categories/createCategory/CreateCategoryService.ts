@@ -1,8 +1,9 @@
-import { inject, injectable } from "tsyringe";
 import {
   ICategoriesRepository,
-  ICreateCategoryDTO,
-} from "../../../repositories/categories/ICategoriesRepository";
+  ICreateCategoryDTO
+} from '../../../repositories/categories/ICategoriesRepository'
+
+import { inject, injectable } from 'tsyringe'
 
 @injectable()
 export class CreateCategoryService {

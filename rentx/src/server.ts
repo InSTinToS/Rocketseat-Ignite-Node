@@ -1,9 +1,11 @@
-import "./database";
-import "./shared/container";
-import express from "express";
-import { routes } from "./routes";
-import swagger from "swagger-ui-express";
-import swaggerFile from "./swagger.json";
+import './database'
+import './shared/container'
+import { routes } from './routes'
+import swaggerFile from './docs/swagger.json'
+
+import express from 'express'
+import swagger from 'swagger-ui-express'
+
 const app = express();
 
 app.use(express.json());

@@ -1,6 +1,7 @@
-import { inject, injectable } from "tsyringe";
-import { Category } from "../../../models/Category";
-import { ICategoriesRepository } from "../../../repositories/categories/ICategoriesRepository";
+import { Category } from '../../../models/Category'
+import { ICategoriesRepository } from '../../../repositories/categories/ICategoriesRepository'
+
+import { inject, injectable } from 'tsyringe'
 
 @injectable()
 class ReadCategoriesService {

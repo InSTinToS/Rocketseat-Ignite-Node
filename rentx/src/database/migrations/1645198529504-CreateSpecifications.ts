@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
 export class CreateSpecifications1645198529504 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -6,9 +6,9 @@ export class CreateSpecifications1645198529504 implements MigrationInterface {
       new Table({
         name: "specifications",
         columns: [
-          { name: "id", type: "uuid", isPrimary: true },
           { name: "name", type: "varchar" },
           { name: "description", type: "varchar" },
+          { name: "id", type: "uuid", isPrimary: true },
           { name: "created_at", type: "timestamp", default: "now()" },
         ],
       })
