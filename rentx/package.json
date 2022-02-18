@@ -1,5 +1,5 @@
 {
-  "name": "rentalx",
+  "name": "rentx",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^4.3.0",
+    "tsyringe": "^4.6.0",
     "typeorm": "^0.2.42",
     "uuid": "^8.3.2",
     "yarn-upgrade-all": "^0.6.1"

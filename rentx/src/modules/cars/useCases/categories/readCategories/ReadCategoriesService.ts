@@ -1,10 +1,15 @@
+import { inject, injectable } from "tsyringe";
 import { Category } from "../../../models/Category";
 import { ICategoriesRepository } from "../../../repositories/categories/ICategoriesRepository";
 
+@injectable()
 class ReadCategoriesService {
-  constructor(private categoriesRepository: ICategoriesRepository) {}
+  constructor(
+    @inject("CategoriesRepository")
+    private categoriesRepository: ICategoriesRepository
+  ) {}
 
-  execute(): Category[] {
+  execute(): Promise<Category[]> {
     return this.categoriesRepository.read();
   }
 }

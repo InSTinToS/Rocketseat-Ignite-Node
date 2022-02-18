@@ -1,17 +1,17 @@
-import { ICategoriesRepository } from "../../../repositories/categories/ICategoriesRepository";
+import { inject, injectable } from "tsyringe";
+import {
+  ICategoriesRepository,
+  ICreateCategoryDTO,
+} from "../../../repositories/categories/ICategoriesRepository";
 
-interface ICreateCategoryServiceDTO {
-  name: string;
-  description: string;
-}
+@injectable()
+export class CreateCategoryService {
+  constructor(
+    @inject("CategoriesRepository")
+    private categoriesRepository: ICategoriesRepository
+  ) {}
 
-class CreateCategoryService {
-  constructor(private categoriesRepository: ICategoriesRepository) {}
-
-  async execute({
-    name,
-    description,
-  }: ICreateCategoryServiceDTO): Promise<void> {
+  async execute({ name, description }: ICreateCategoryDTO): Promise<void> {
     const categoryAlreadyExists = await this.categoriesRepository.findByName(
       name
     );
@@ -21,5 +21,3 @@ class CreateCategoryService {
     await this.categoriesRepository.create({ description, name });
   }
 }
-
-export { CreateCategoryService, ICreateCategoryServiceDTO };
