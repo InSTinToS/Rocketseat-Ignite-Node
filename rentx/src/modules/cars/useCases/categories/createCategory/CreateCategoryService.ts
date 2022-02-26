@@ -2,6 +2,7 @@ import {
   ICategoriesRepository,
   ICreateCategoryDTO
 } from '../../../repositories/categories/ICategoriesRepository'
+import { AppError } from '../../../../../errors/AppError'
 
 import { inject, injectable } from 'tsyringe'
 
@@ -17,7 +18,8 @@ export class CreateCategoryService {
       name
     );
 
-    if (categoryAlreadyExists) throw new Error("Category already exists");
+    if (categoryAlreadyExists)
+      throw new AppError("Category already exists", 400);
 
     await this.categoriesRepository.create({ description, name });
   }

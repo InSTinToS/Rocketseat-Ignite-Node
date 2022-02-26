@@ -1,4 +1,5 @@
 import { ISpecificationsRepository } from '../../../repositories/specifications/ISpecificationsRepository'
+import { AppError } from '../../../../../errors/AppError'
 
 import { inject, injectable } from 'tsyringe'
 
@@ -19,7 +20,7 @@ class CreateSpecificationService {
       await this.specificationsRepository.findByName(name);
 
     if (specificationAlreadyExists)
-      throw new Error("Specification already exists");
+      throw new AppError("Specification already exists", 400);
 
     await this.specificationsRepository.create({
       name,
