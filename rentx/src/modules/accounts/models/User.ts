@@ -24,6 +24,9 @@ class User {
   @Column()
   driver_license: string;
 
+  @Column()
+  avatar: string;
+
   constructor() {
     if (!this.id) {
       this.id = uuid();

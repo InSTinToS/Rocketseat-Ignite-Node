@@ -1,8 +1,10 @@
 import { User } from '../models/User'
 
 interface ICreateUserDTO {
+  id?: User["id"];
   name: User["name"];
   email: User["email"];
+  avatar?: User["avatar"];
   password: User["password"];
   driver_license: User["driver_license"];
 }

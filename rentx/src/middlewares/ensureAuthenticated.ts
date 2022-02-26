@@ -19,9 +19,11 @@ async function ensureAuthenticated(
     const { sub: subjectId } = verify(token, "secret");
 
     const usersRepository = new UsersRepository();
-    const user = usersRepository.findById(subjectId as string);
+    const user = await usersRepository.findById(subjectId as string);
 
     if (!user) throw new AppError("User does not exists", 401);
+
+    req.user = { id: user.avatar };
 
     next();
   } catch (error) {

@@ -1,5 +1,5 @@
 import { CreateSpecificationController } from '../modules/cars/useCases/specifications/createSpecification/createSpecificationController'
-import { ensureAuthenticated } from '../middleware/ensureAuthenticated'
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 
 import { Router } from 'express'
 
