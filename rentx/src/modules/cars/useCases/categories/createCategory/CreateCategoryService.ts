@@ -1,8 +1,8 @@
 import {
   ICategoriesRepository,
   ICreateCategoryDTO
-} from '../../../repositories/categories/ICategoriesRepository'
-import { AppError } from '../../../../../errors/AppError'
+} from '../../../infra/repositories/categories/ICategoriesRepository'
+import { AppError } from '../../../../../shared/errors/AppError'
 
 import { inject, injectable } from 'tsyringe'
 

@@ -1,4 +1,4 @@
-import { User } from '../models/User'
+import { User } from '../typeorm/models/User'
 
 interface ICreateUserDTO {
   id?: User["id"];

@@ -1,4 +1,4 @@
-import { ICategoriesRepository } from '../../../repositories/categories/ICategoriesRepository'
+import { ICategoriesRepository } from '../../../infra/repositories/categories/ICategoriesRepository'
 
 import { parse as csvParse } from 'csv-parse'
 import fs from 'fs'

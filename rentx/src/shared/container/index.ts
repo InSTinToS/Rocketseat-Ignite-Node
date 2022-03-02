@@ -1,9 +1,9 @@
-import { CategoriesRepository } from '../../modules/cars/repositories/categories/CategoriesRepository'
-import { ICategoriesRepository } from '../../modules/cars/repositories/categories/ICategoriesRepository'
-import { ISpecificationsRepository } from '../../modules/cars/repositories/specifications/ISpecificationsRepository'
-import { SpecificationsRepository } from '../../modules/cars/repositories/specifications/SpecificationsRepository'
-import { IUsersRepository } from '../../modules/accounts/repositories/IUsersRepository'
-import { UsersRepository } from '../../modules/accounts/repositories/UsersRepository'
+import { CategoriesRepository } from '../../modules/cars/infra/repositories/categories/CategoriesRepository'
+import { ICategoriesRepository } from '../../modules/cars/infra/repositories/categories/ICategoriesRepository'
+import { ISpecificationsRepository } from '../../modules/cars/infra/repositories/specifications/ISpecificationsRepository'
+import { SpecificationsRepository } from '../../modules/cars/infra/repositories/specifications/SpecificationsRepository'
+import { IUsersRepository } from '../../modules/accounts/infra/repositories/IUsersRepository'
+import { UsersRepository } from '../../modules/accounts/infra/repositories/UsersRepository'
 
 import { container } from 'tsyringe'
 

@@ -1,7 +1,7 @@
-import { CreateUserController } from '../modules/accounts/useCases/users/createUser/CreateUserController'
-import { ReadUserController } from '../modules/accounts/useCases/users/readUser/ReadUserController'
-import { UpdateUserAvatarController } from '../modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController'
-import uploadConfig from '../config/upload'
+import { CreateUserController } from '../../../../../modules/accounts/useCases/users/createUser/CreateUserController'
+import { ReadUserController } from '../../../../../modules/accounts/useCases/users/readUser/ReadUserController'
+import { UpdateUserAvatarController } from '../../../../../modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController'
+import uploadConfig from '../../../../../config/upload'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 
 import { Router } from 'express'

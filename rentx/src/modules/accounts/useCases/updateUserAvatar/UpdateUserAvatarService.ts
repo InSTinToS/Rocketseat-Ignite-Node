@@ -1,6 +1,6 @@
-import { User } from '../../models/User'
-import { IUsersRepository } from '../../repositories/IUsersRepository'
-import { deleteFile } from '../../../../utils/file'
+import { User } from '../../infra/typeorm/models/User'
+import { IUsersRepository } from '../../infra/repositories/IUsersRepository'
+import { deleteFile } from '../../../../shared/utils/file'
 
 import { inject, injectable } from 'tsyringe'
 

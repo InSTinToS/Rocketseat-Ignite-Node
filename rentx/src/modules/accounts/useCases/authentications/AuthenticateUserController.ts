@@ -13,4 +13,5 @@ class AuthenticateUserController {
     return res.json(resData).status(200);
   }
 }
+
 export { AuthenticateUserController };

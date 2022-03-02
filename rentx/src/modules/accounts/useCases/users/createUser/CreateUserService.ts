@@ -1,8 +1,8 @@
 import {
   ICreateUserDTO,
   IUsersRepository
-} from '../../../repositories/IUsersRepository'
-import { AppError } from '../../../../../errors/AppError'
+} from '../../../infra/repositories/IUsersRepository'
+import { AppError } from '../../../../../shared/errors/AppError'
 
 import { hash } from 'bcrypt'
 import { inject, injectable } from 'tsyringe'

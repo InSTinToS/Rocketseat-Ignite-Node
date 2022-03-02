@@ -1,10 +1,10 @@
-import './database'
+import './shared/infra/database/postgres/typeorm'
 import './shared/container'
-import { routes } from './routes'
+import { routes } from './shared/infra/http/express/routes'
 import swaggerFile from './docs/swagger.json'
-import { AppError } from './errors/AppError'
+import { AppError } from './shared/errors/AppError'
 
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import 'express-async-errors'
 import swagger from 'swagger-ui-express'
 
@@ -16,7 +16,9 @@ app.use("/api-docs", swagger.serve, swagger.setup(swaggerFile));
 
 app.use(routes);
 
-app.use((error: Error, req: Request, res: Response) => {
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log(error);
+
   if (error instanceof AppError)
     return res.status(error.statusCode).json({ message: error.message });
 
@@ -25,4 +27,4 @@ app.use((error: Error, req: Request, res: Response) => {
   });
 });
 
-app.listen(3333, () => console.log("Server running!"));
+app.listen(3333, () => console.log("Server runnings3!"));

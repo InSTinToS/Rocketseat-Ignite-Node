@@ -4,6 +4,7 @@ import { usersRoutes } from './users.routes'
 import { authenticationsRoutes } from './authentications.routes'
 
 import { Router } from 'express'
+import 'express-async-errors'
 
 const routes = Router();
 

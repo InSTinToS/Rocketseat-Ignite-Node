@@ -1,4 +1,4 @@
-import { User } from '../models/User'
+import { User } from '../typeorm/models/User'
 import { ICreateUserDTO, IUsersRepository } from './IUsersRepository'
 
 import { getRepository, Repository } from 'typeorm'

@@ -1,7 +1,7 @@
-import { User } from '../../models/User'
-import { IUsersRepository } from '../../repositories/IUsersRepository'
-import { AppError } from '../../../../errors/AppError'
+import { User } from '../../infra/typeorm/models/User'
+import { IUsersRepository } from '../../infra/repositories/IUsersRepository'
 
+import { AppError } from '@shared/errors/AppError'
 import { compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
 import { inject, injectable } from 'tsyringe'
