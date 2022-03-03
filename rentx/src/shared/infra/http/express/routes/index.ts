@@ -2,15 +2,17 @@ import { categoriesRoutes } from './categories.routes'
 import { specificationsRoutes } from './specifications.routes'
 import { usersRoutes } from './users.routes'
 import { authenticationsRoutes } from './authentications.routes'
+import { carsRoutes } from './cars.routes'
 
 import { Router } from 'express'
 import 'express-async-errors'
 
-const routes = Router();
+const routes = Router()
 
-routes.use("/users", usersRoutes);
-routes.use("/categories", categoriesRoutes);
-routes.use("/specifications", specificationsRoutes);
-routes.use(authenticationsRoutes);
+routes.use('/cars', carsRoutes)
+routes.use('/users', usersRoutes)
+routes.use('/categories', categoriesRoutes)
+routes.use('/sessions', authenticationsRoutes)
+routes.use('/specifications', specificationsRoutes)
 
-export { routes };
+export { routes }

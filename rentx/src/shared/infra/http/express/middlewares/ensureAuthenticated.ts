@@ -1,5 +1,7 @@
-import { UsersRepository } from '@modules/accounts/infra/repositories/UsersRepository'
 import { AppError } from '@shared/errors/AppError'
+
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
+
 import { NextFunction, Request, Response } from 'express'
 import 'express-async-errors'
 import { verify } from 'jsonwebtoken'
@@ -9,22 +11,22 @@ async function ensureAuthenticated(
   res: Response,
   next: NextFunction
 ) {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization
 
-  if (!authHeader) throw new AppError("Missing Token", 401);
+  if (!authHeader) throw new AppError('Missing Token', 401)
 
-  const token = authHeader.split(" ")[1];
+  const token = authHeader.split(' ')[1]
 
-  const { sub: subjectId } = verify(token, "secret");
+  const { sub: subjectId } = verify(token, 'secret')
 
-  const usersRepository = new UsersRepository();
-  const user = await usersRepository.findById(subjectId as string);
+  const usersRepository = new UsersRepository()
+  const user = await usersRepository.findById(subjectId as string)
 
-  if (!user) throw new AppError("User does not exists", 401);
+  if (!user) throw new AppError('User does not exists', 401)
 
-  req.user = { id: user.avatar };
+  req.user = { id: user.id }
 
-  next();
+  next()
 }
 
-export { ensureAuthenticated };
+export { ensureAuthenticated }

@@ -1,43 +1,44 @@
-import { AppError } from '../../../../../shared/errors/AppError'
-import { CategoriesRepositoryInMemory } from '../../../infra/repositories/categories/CategoriesRepositoryInMemory'
+import { CategoriesRepositoryInMemory } from '../../../infra/typeorm/repositories/categories/CategoriesRepositoryInMemory'
 import { CreateCategoryService } from './CreateCategoryService'
 
-let createCategoryService: CreateCategoryService;
-let categoriesRepositoryInMemory: CategoriesRepositoryInMemory;
+import { AppError } from '@shared//errors/AppError'
 
-describe("Create cateogory", () => {
+let createCategoryService: CreateCategoryService
+let categoriesRepositoryInMemory: CategoriesRepositoryInMemory
+
+describe('Create cateogory', () => {
   beforeEach(() => {
-    categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
+    categoriesRepositoryInMemory = new CategoriesRepositoryInMemory()
     createCategoryService = new CreateCategoryService(
       categoriesRepositoryInMemory
-    );
-  });
+    )
+  })
 
-  it("Should be able to create a new cateogory", async () => {
+  it('Should be able to create a new cateogory', async () => {
     const newCategory = {
-      name: "Category name test",
-      description: "Category description test",
-    };
+      name: 'Category name test',
+      description: 'Category description test'
+    }
 
-    await createCategoryService.execute(newCategory);
+    await createCategoryService.execute(newCategory)
 
     const foundCategory = await categoriesRepositoryInMemory.findByName(
       newCategory.name
-    );
+    )
 
-    expect(foundCategory).toHaveProperty("id");
-  });
+    expect(foundCategory).toHaveProperty('id')
+  })
 
-  it("Should not be able to create a new cateogory with same name", async () => {
+  it('Should not be able to create a new cateogory with same name', async () => {
     const newCategory = {
-      name: "Category name test",
-      description: "Category description test",
-    };
+      name: 'Category name test',
+      description: 'Category description test'
+    }
 
-    await createCategoryService.execute(newCategory);
+    await createCategoryService.execute(newCategory)
 
     expect(async () => {
-      await createCategoryService.execute(newCategory);
-    }).rejects.toBeInstanceOf(AppError);
-  });
-});
+      await createCategoryService.execute(newCategory)
+    }).rejects.toBeInstanceOf(AppError)
+  })
+})

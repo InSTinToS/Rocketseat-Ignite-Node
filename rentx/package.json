@@ -4,7 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "docker-up": "docker-compose up -d && yarn orm migration:run",
+
+    "docker-restart": "docker-compose down && docker-compose up -d && yarn orm migration:run && yarn seed:admin",
+    "seed:admin": "ts-node-dev -r tsconfig-paths/register src/shared/infra/database/postgres/typeorm/seeds/admin.ts",
+    "docker-up": "docker-compose up -d && yarn orm migration:run && yarn seed:admin",
     "docker-prune": "docker-compose down && docker system prune -a -f --volumes",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "orm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",

@@ -1,23 +1,27 @@
-import { CategoriesRepository } from '../../modules/cars/infra/repositories/categories/CategoriesRepository'
-import { ICategoriesRepository } from '../../modules/cars/infra/repositories/categories/ICategoriesRepository'
-import { ISpecificationsRepository } from '../../modules/cars/infra/repositories/specifications/ISpecificationsRepository'
-import { SpecificationsRepository } from '../../modules/cars/infra/repositories/specifications/SpecificationsRepository'
-import { IUsersRepository } from '../../modules/accounts/infra/repositories/IUsersRepository'
-import { UsersRepository } from '../../modules/accounts/infra/repositories/UsersRepository'
+import { CategoriesRepository } from '@modules/cars/infra/typeorm/repositories/categories/CategoriesRepository'
+import { ICategoriesRepository } from '@modules/cars/infra/typeorm/repositories/categories/ICategoriesRepository'
+import { ISpecificationsRepository } from '@modules/cars/infra/typeorm/repositories/specifications/ISpecificationsRepository'
+import { SpecificationsRepository } from '@modules/cars/infra/typeorm/repositories/specifications/SpecificationsRepository'
+import { IUsersRepository } from '@modules/accounts/infra/typeorm/repositories/IUsersRepository'
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
+import { ICarsRepository } from '@modules/cars/infra/typeorm/repositories/cars/ICarsRepository'
+import { CarsRepository } from '@modules/cars/infra/typeorm/repositories/cars/CarsRepository'
 
 import { container } from 'tsyringe'
 
 container.registerSingleton<ICategoriesRepository>(
-  "CategoriesRepository",
+  'CategoriesRepository',
   CategoriesRepository
-);
+)
 
 container.registerSingleton<ISpecificationsRepository>(
-  "SpecificationsRepository",
+  'SpecificationsRepository',
   SpecificationsRepository
-);
+)
 
 container.registerSingleton<IUsersRepository>(
-  "UsersRepository",
+  'UsersRepository',
   UsersRepository
-);
+)
+
+container.registerSingleton<ICarsRepository>('CarsRepository', CarsRepository)

@@ -1,29 +1,30 @@
 import { User } from '../../infra/typeorm/models/User'
-import { IUsersRepository } from '../../infra/repositories/IUsersRepository'
-import { deleteFile } from '../../../../shared/utils/file'
+import { IUsersRepository } from '../../infra/typeorm/repositories/IUsersRepository'
+
+import { deleteFile } from '@shared/utils/file'
 
 import { inject, injectable } from 'tsyringe'
 
 interface IRequest {
-  userId: User["id"];
-  avatar: User["avatar"];
+  userId: User['id']
+  avatar: User['avatar']
 }
 
 @injectable()
 class UpdateUserAvatarService {
   constructor(
-    @inject("UsersRepository")
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository
   ) {}
 
   async execute({ avatar, userId }: IRequest): Promise<void> {
-    const user = await this.usersRepository.findById(userId);
+    const user = await this.usersRepository.findById(userId)
 
-    user.avatar && (await deleteFile(user.avatar));
-    user.avatar = avatar;
+    user.avatar && (await deleteFile(user.avatar))
+    user.avatar = avatar
 
-    await this.usersRepository.create(user);
+    await this.usersRepository.create(user)
   }
 }
 
-export { UpdateUserAvatarService };
+export { UpdateUserAvatarService }

@@ -1,29 +1,29 @@
-import { CreateUserController } from '../../../../../modules/accounts/useCases/users/createUser/CreateUserController'
-import { ReadUserController } from '../../../../../modules/accounts/useCases/users/readUser/ReadUserController'
-import { UpdateUserAvatarController } from '../../../../../modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController'
-import uploadConfig from '../../../../../config/upload'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
+
+import { UpdateUserAvatarController } from '@modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController'
+import { CreateUserController } from '@modules/accounts/useCases/users/createUser/CreateUserController'
+import { ReadUserController } from '@modules/accounts/useCases/users/readUser/ReadUserController'
+
+import uploadConfig from '@config/upload'
 
 import { Router } from 'express'
 import multer from 'multer'
 
-const usersRoutes = Router();
+const usersRoutes = Router()
+const readUserController = new ReadUserController()
+const upload = multer(uploadConfig('./temp/avatar'))
+const createUserController = new CreateUserController()
+const updateUserAvatarController = new UpdateUserAvatarController()
 
-const upload = multer(uploadConfig("./temp/avatar"));
+usersRoutes.get('/', readUserController.handle)
 
-const createUserController = new CreateUserController();
-const readUserController = new ReadUserController();
-const updateUserAvatarController = new UpdateUserAvatarController();
-
-usersRoutes.get("/", readUserController.handle);
-
-usersRoutes.post("/", createUserController.handle);
+usersRoutes.post('/', createUserController.handle)
 
 usersRoutes.patch(
-  "/avatar",
+  '/avatar',
   ensureAuthenticated,
-  upload.single("avatar"),
+  upload.single('avatar'),
   updateUserAvatarController.handle
-);
+)
 
-export { usersRoutes };
+export { usersRoutes }
