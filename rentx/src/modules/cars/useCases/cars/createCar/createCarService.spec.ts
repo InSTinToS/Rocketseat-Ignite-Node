@@ -2,7 +2,7 @@ import { CreateCarService } from './createCarService'
 
 import { AppError } from '@shared/errors/AppError'
 
-import { CarsRepositoryInMemory } from '@modules/cars/infra/typeorm/repositories/cars/ICarsRepositoryInMemory'
+import { CarsRepositoryInMemory } from '@modules/cars/infra/typeorm/repositories/cars/CarsRepositoryInMemory'
 
 const newCarData = {
   name: 'name',

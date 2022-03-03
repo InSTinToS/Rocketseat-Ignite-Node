@@ -6,7 +6,6 @@ import { container } from 'tsyringe'
 class CreateCarController {
   async handle(req: Request, res: Response) {
     const newCarData = req.body
-
     const createCarService = container.resolve(CreateCarService)
 
     const createdCar = await createCarService.execute(newCarData)

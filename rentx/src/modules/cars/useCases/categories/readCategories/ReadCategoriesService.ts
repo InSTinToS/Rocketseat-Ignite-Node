@@ -1,4 +1,4 @@
-import { Category } from '../../../infra/models/Category'
+import { Category } from '../../../infra/typeorm/models/Category'
 import { ICategoriesRepository } from '../../../infra/typeorm/repositories/categories/ICategoriesRepository'
 
 import { inject, injectable } from 'tsyringe'
