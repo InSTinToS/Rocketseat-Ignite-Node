@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-
     "docker-restart": "docker-compose down && docker-compose up -d && yarn orm migration:run && yarn seed:admin",
     "seed:admin": "ts-node-dev -r tsconfig-paths/register src/shared/infra/database/postgres/typeorm/seeds/admin.ts",
     "docker-up": "docker-compose up -d && yarn orm migration:run && yarn seed:admin",
@@ -35,6 +34,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "csv-parse": "^5.0.4",
+    "dayjs": "^1.10.8",
     "express": "^4.17.2",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
