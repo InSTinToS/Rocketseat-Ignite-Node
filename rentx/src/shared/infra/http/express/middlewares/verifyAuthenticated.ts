@@ -1,4 +1,4 @@
-import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/users/UsersRepository'
 
 import { NextFunction, Request, Response } from 'express'
 import 'express-async-errors'

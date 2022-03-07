@@ -1,5 +1,5 @@
-import { ICreateUserDTO } from '../../infra/typeorm/repositories/IUsersRepository'
-import { UsersRepositoryInMemory } from '../../infra/typeorm/repositories/UsersRepositoryInMemory'
+import { ICreateUserDTO } from '../../infra/typeorm/repositories/users/IUsersRepository'
+import { UsersRepositoryInMemory } from '../../infra/typeorm/repositories/users/UsersRepositoryInMemory'
 import { CreateUserService } from '../users/createUser/CreateUserService'
 import { AuthenticateUserService } from './AuthenticateUserService'
 

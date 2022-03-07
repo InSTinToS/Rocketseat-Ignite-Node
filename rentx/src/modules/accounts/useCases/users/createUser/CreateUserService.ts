@@ -1,7 +1,7 @@
 import {
   ICreateUserDTO,
   IUsersRepository
-} from '../../../infra/typeorm/repositories/IUsersRepository'
+} from '../../../infra/typeorm/repositories/users/IUsersRepository'
 
 import { AppError } from '@shared//errors/AppError'
 

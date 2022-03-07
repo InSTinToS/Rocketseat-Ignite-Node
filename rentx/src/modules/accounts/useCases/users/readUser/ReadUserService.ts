@@ -1,4 +1,4 @@
-import { IUsersRepository } from '../../../infra/typeorm/repositories/IUsersRepository'
+import { IUsersRepository } from '../../../infra/typeorm/repositories/users/IUsersRepository'
 
 import { inject, injectable } from 'tsyringe'
 

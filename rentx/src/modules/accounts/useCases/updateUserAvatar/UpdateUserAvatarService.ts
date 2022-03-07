@@ -1,5 +1,5 @@
 import { User } from '../../infra/typeorm/models/User'
-import { IUsersRepository } from '../../infra/typeorm/repositories/IUsersRepository'
+import { IUsersRepository } from '../../infra/typeorm/repositories/users/IUsersRepository'
 
 import { deleteFile } from '@shared/utils/file'
 
