@@ -2,6 +2,7 @@ import { IDateProvider } from '../../IDateProvider'
 
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
+import 'reflect-metadata'
 
 dayjs.extend(utc)
 

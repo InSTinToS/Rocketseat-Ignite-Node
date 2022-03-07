@@ -16,10 +16,10 @@ class CarsRepository implements ICarsRepository {
   }
 
   async filterByQuery({
-    available,
+    name,
     brand,
-    category_id,
-    name
+    available,
+    category_id
   }: {
     name?: string
     brand?: string
@@ -29,11 +29,8 @@ class CarsRepository implements ICarsRepository {
     const carsQuery = this.repository.createQueryBuilder('car')
 
     if (available) carsQuery.where('car.available = :available', { available })
-
     if (brand) carsQuery.andWhere('car.brand = :brand', { brand })
-
     if (name) carsQuery.andWhere('car.name = :name', { name })
-
     if (category_id)
       carsQuery.andWhere('car.category_id = :category_id', { category_id })
 
