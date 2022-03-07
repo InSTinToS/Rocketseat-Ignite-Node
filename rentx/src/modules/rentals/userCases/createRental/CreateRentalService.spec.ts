@@ -4,29 +4,44 @@ import { AppError } from '@shared/errors/AppError'
 import { DayjsDateProvider } from '@shared/container/providers/DateProvider/infra/DayjsDateProvider/DayjsDateProvider'
 
 import { RentalRepositoryInMemory } from '@modules/rentals/infra/typeorm/repositories/RentalRepositoryInMemory'
+import { CarsRepositoryInMemory } from '@modules/cars/infra/typeorm/repositories/cars/CarsRepositoryInMemory'
 
 import dayjs from 'dayjs'
 
 let createRentalService: CreateRentalService
 let rentalsRepositoryInMemory: RentalRepositoryInMemory
+let carsRepositoryInMemory: CarsRepositoryInMemory
 let dayjsDateProvider: DayjsDateProvider
 
 describe('Create rental', () => {
   const actualDatePlus24h = dayjs().add(1, 'day').toDate()
 
   beforeEach(() => {
-    rentalsRepositoryInMemory = new RentalRepositoryInMemory()
     dayjsDateProvider = new DayjsDateProvider()
+    carsRepositoryInMemory = new CarsRepositoryInMemory()
+    rentalsRepositoryInMemory = new RentalRepositoryInMemory()
+
     createRentalService = new CreateRentalService(
       rentalsRepositoryInMemory,
-      dayjsDateProvider
+      dayjsDateProvider,
+      carsRepositoryInMemory
     )
   })
 
   it('should be able to create a rental', async () => {
+    const car = await carsRepositoryInMemory.create({
+      name: 'test name',
+      description: 'car description',
+      daily_rate: 99,
+      license_plate: '99',
+      brand: '99',
+      fine_amount: 99,
+      category_id: '99'
+    })
+
     const rental = await createRentalService.execute({
       user_id: '1',
-      car_id: '1',
+      car_id: car.id,
       expected_date: actualDatePlus24h
     })
 

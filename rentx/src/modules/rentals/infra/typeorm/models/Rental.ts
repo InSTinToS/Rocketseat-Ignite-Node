@@ -1,7 +1,11 @@
+import { Car } from '@modules/cars/infra/typeorm/models/Car'
+
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn
 } from 'typeorm'
@@ -12,8 +16,15 @@ class Rental {
   @PrimaryColumn()
   id: string
 
+  @ManyToOne(() => Car)
+  @JoinColumn({ name: 'car_id' })
+  car: Car
+
   @Column()
   total: number
+
+  @Column()
+  expected_date: Date
 
   @Column()
   car_id: string
@@ -22,7 +33,7 @@ class Rental {
   user_id: string
 
   @Column()
-  end_date: string
+  end_date: Date
 
   @CreateDateColumn()
   created_at: Date
@@ -31,7 +42,7 @@ class Rental {
   updated_at: Date
 
   @Column()
-  start_date: string
+  start_date: Date
 
   constructor() {
     if (!this.id) this.id = v4()

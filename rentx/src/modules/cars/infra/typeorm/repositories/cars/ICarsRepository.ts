@@ -18,6 +18,7 @@ interface ICarsRepository {
   read(): Promise<Car[]>
   findById(id: Car['id']): Promise<Car>
   create(newCarData: ICreateCarDTO): Promise<Car>
+  updateAvailable(id: Car['id'], available: boolean): Promise<void>
   findByLicensePlate(license_plate: Car['license_plate']): Promise<Car>
   filterByQuery(queryData: {
     name?: string

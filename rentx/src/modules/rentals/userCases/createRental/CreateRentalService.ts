@@ -2,6 +2,7 @@ import { AppError } from '@shared/errors/AppError'
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
 
 import { IRentalRepository } from '@modules/rentals/infra/typeorm/repositories/IRentalRepository'
+import { ICarsRepository } from '@modules/cars/infra/typeorm/repositories/cars/ICarsRepository'
 
 import 'reflect-metadata'
 import { inject, injectable } from 'tsyringe'
@@ -19,7 +20,10 @@ class CreateRentalService {
     private rentalsRepository: IRentalRepository,
 
     @inject('DayjsDateProvider')
-    private dateProvider: IDateProvider
+    private dateProvider: IDateProvider,
+
+    @inject('CarsRepository')
+    private carsRepository: ICarsRepository
   ) {}
 
   async execute(createData: IRequest) {
@@ -50,7 +54,11 @@ class CreateRentalService {
         `Min duration must be equal or greater than ${minHour}h`
       )
 
-    return await this.rentalsRepository.create(createData)
+    const rental = await this.rentalsRepository.create(createData)
+
+    await this.carsRepository.updateAvailable(rental.car_id, false)
+
+    return rental
   }
 }
 

@@ -5,6 +5,13 @@ import { Car } from '@modules/cars/infra/typeorm/models/Car'
 class CarsRepositoryInMemory implements ICarsRepository {
   private cars: Car[] = []
 
+  async updateAvailable(id: string, available: boolean): Promise<void> {
+    const foundIndex = this.cars.findIndex(car => car.id === id)
+
+    if (this.cars[foundIndex]?.available)
+      this.cars[foundIndex].available = available
+  }
+
   async create(newCarData: ICreateCarDTO): Promise<Car> {
     const car = new Car()
     Object.assign(car, newCarData)
