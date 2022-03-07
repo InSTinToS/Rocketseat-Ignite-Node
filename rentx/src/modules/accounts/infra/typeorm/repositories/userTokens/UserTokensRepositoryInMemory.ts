@@ -4,7 +4,7 @@ import {
 } from './IUserTokensRepository'
 import { UserTokens } from '../../models/UserTokens'
 
-class UsersRepositoryInMemory implements IUserTokensRepository {
+class UserTokensRepositoryInMemory implements IUserTokensRepository {
   private userTokens: UserTokens[] = []
 
   async create(data: ICreateUserTokenDTO): Promise<UserTokens> {
@@ -16,4 +16,4 @@ class UsersRepositoryInMemory implements IUserTokensRepository {
   }
 }
 
-export { UsersRepositoryInMemory }
+export { UserTokensRepositoryInMemory }

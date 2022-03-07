@@ -7,6 +7,9 @@ import 'reflect-metadata'
 dayjs.extend(utc)
 
 class DayjsDateProvider implements IDateProvider {
+  addDays(days: number): Date {
+    return dayjs().add(days, 'days').toDate()
+  }
   compareInDays(startDate: Date, endDate: Date): number {
     return dayjs(this.convertToUTC(endDate)).diff(
       this.convertToUTC(startDate),

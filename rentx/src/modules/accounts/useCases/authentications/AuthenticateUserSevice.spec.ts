@@ -4,16 +4,27 @@ import { CreateUserService } from '../users/createUser/CreateUserService'
 import { AuthenticateUserService } from './AuthenticateUserService'
 
 import { AppError } from '@shared/errors/AppError'
+import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
+import { DayjsDateProvider } from '@shared/container/providers/DateProvider/infra/DayjsDateProvider/DayjsDateProvider'
+
+import { UserTokensRepositoryInMemory } from '@modules/accounts/infra/typeorm/repositories/userTokens/UserTokensRepositoryInMemory'
 
 let authenticateUserService: AuthenticateUserService
 let usersRepositoryInMemory: UsersRepositoryInMemory
 let createUserService: CreateUserService
+let userTokensRepositoryInMemory: UserTokensRepositoryInMemory
+let dateProvider: IDateProvider
 
 describe('Authenticate user', () => {
   beforeEach(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory()
+    userTokensRepositoryInMemory = new UserTokensRepositoryInMemory()
+    dateProvider = new DayjsDateProvider()
+
     authenticateUserService = new AuthenticateUserService(
-      usersRepositoryInMemory
+      usersRepositoryInMemory,
+      userTokensRepositoryInMemory,
+      dateProvider
     )
     createUserService = new CreateUserService(usersRepositoryInMemory)
   })
