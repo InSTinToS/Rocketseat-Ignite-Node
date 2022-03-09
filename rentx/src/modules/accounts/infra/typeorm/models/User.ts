@@ -13,6 +13,9 @@ class User {
   email: string
 
   @Column()
+  avatar: string
+
+  @Column()
   password: string
 
   @Column()
@@ -24,13 +27,8 @@ class User {
   @Column()
   driver_license: string
 
-  @Column()
-  avatar: string
-
   constructor() {
-    if (!this.id) {
-      this.id = uuid()
-    }
+    if (!this.id) this.id = uuid()
   }
 }
 

@@ -1,14 +1,18 @@
 import { AppError } from '@shared/errors/AppError'
-import { DayjsDateProvider } from '@shared/container/providers/DateProvider/infra/DayjsDateProvider/DayjsDateProvider'
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
 
-import { UserTokensRepository } from '@modules/accounts/infra/typeorm/repositories/userTokens/UserTokensRepository'
 import { IUserTokensRepository } from '@modules/accounts/infra/typeorm/repositories/userTokens/IUserTokensRepository'
+import { UserTokens } from '@modules/accounts/infra/typeorm/models/UserTokens'
 
 import auth from '@config/auth'
 
 import { sign, verify } from 'jsonwebtoken'
 import { inject, injectable } from 'tsyringe'
+
+interface ITokenPayload {
+  sub: UserTokens['user_id']
+  email: UserTokens['user']['email']
+}
 
 @injectable()
 class RefreshTokenService {
@@ -20,40 +24,49 @@ class RefreshTokenService {
     private dateProvider: IDateProvider
   ) {}
 
-  async execute(token: string) {
-    const { sub, email } = verify(token, auth.refresh_token.secret) as {
-      sub: string
-      email: string
+  async execute(refresh_token: string) {
+    if (!refresh_token) throw new AppError('Missing refresh token', 400)
+
+    let user_id: string, email: string
+
+    try {
+      const { sub: payloadUserId, email: payloadEmail } = verify(
+        refresh_token,
+        auth.refresh_token.secret
+      ) as ITokenPayload
+
+      user_id = payloadUserId
+      email = payloadEmail
+    } catch (error) {
+      throw new AppError('JWT is invalid', 401)
     }
 
-    const user_id = sub
-
-    const userToken =
-      await this.userTokensRepository.findByUserIdAndRefreshToken(
+    const foundUserToken =
+      await this.userTokensRepository.findByUserIdAndRefreshToken({
         user_id,
-        token
-      )
+        refresh_token
+      })
 
-    if (!userToken) throw new AppError('Refresh Token does not exists!')
+    if (!foundUserToken)
+      throw new AppError('Not found user with this refresh_token', 404)
 
-    this.userTokensRepository.deleteById(userToken.id)
+    this.userTokensRepository.deleteById(foundUserToken.id)
 
-    const expires_date = this.dateProvider.addDays(
-      auth.refresh_token.expires_in_days
-    )
-
-    const refresh_token = sign({ email }, auth.refresh_token.secret, {
+    const newRefreshToken = sign({ email }, auth.refresh_token.secret, {
       subject: user_id,
-      expiresIn: auth.refresh_token.expires_in
+      expiresIn: `${auth.refresh_token.expires_in}${auth.refresh_token.expires_unit}`
     })
 
     await this.userTokensRepository.create({
-      expires_date,
-      id: user_id,
-      refresh_token
+      user_id,
+      refresh_token: newRefreshToken,
+      expires_date: this.dateProvider.addDays(
+        auth.refresh_token.expires_in,
+        auth.refresh_token.expires_unit
+      )
     })
 
-    return refresh_token
+    return newRefreshToken
   }
 }
 

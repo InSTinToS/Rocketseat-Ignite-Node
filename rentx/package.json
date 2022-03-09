@@ -8,7 +8,7 @@
     "seed:admin": "ts-node-dev -r tsconfig-paths/register src/shared/infra/database/postgres/typeorm/seeds/admin.ts",
     "docker-up": "docker-compose up -d && yarn orm migration:run && yarn seed:admin",
     "docker-prune": "docker-compose down && docker system prune -a -f --volumes",
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "dev": "ts-node-dev --poll --respawn -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "orm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "set NODE_ENV=test&& jest --runInBand --detectOpenHandles"
   },
@@ -37,6 +37,7 @@
     "bcrypt": "^5.0.1",
     "csv-parse": "^5.0.4",
     "dayjs": "^1.10.8",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",

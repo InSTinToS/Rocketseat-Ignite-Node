@@ -1,18 +1,28 @@
 import { UserTokens } from '../../models/UserTokens'
 
 interface ICreateUserTokenDTO {
-  id: string
-  expires_date: Date
-  refresh_token: string
+  user_id: UserTokens['id']
+  expires_date: UserTokens['expires_date']
+  refresh_token: UserTokens['refresh_token']
 }
+
+interface IFindByUserIdAndRefreshTokenDTO {
+  user_id: UserTokens['user_id']
+  refresh_token: UserTokens['refresh_token']
+}
+
+type FindByUserIdAndRefreshToken = (
+  data: IFindByUserIdAndRefreshTokenDTO
+) => Promise<UserTokens>
 
 interface IUserTokensRepository {
-  create(data: ICreateUserTokenDTO): Promise<UserTokens>
-  findByUserIdAndRefreshToken(
-    user_id: string,
-    refresh_token: string
-  ): Promise<UserTokens>
   deleteById(id: string): Promise<void>
+  create(data: ICreateUserTokenDTO): Promise<UserTokens>
+  findByUserIdAndRefreshToken: FindByUserIdAndRefreshToken
 }
 
-export { IUserTokensRepository, ICreateUserTokenDTO }
+export type {
+  IUserTokensRepository,
+  ICreateUserTokenDTO,
+  FindByUserIdAndRefreshToken
+}

@@ -5,14 +5,15 @@ import { container } from 'tsyringe'
 
 class UpdateUserAvatarController {
   async handle(req: Request, res: Response) {
-    const { id } = req.user;
-    const avatar = req.file.filename;
-    const updateUserAvatarService = container.resolve(UpdateUserAvatarService);
+    const { id } = req.user
+    const avatar = req.file.filename
 
-    await updateUserAvatarService.execute({ userId: id, avatar });
+    const updateUserAvatarService = container.resolve(UpdateUserAvatarService)
 
-    return res.status(204).send();
+    await updateUserAvatarService.execute({ userId: id, avatar })
+
+    return res.status(204).send()
   }
 }
 
-export { UpdateUserAvatarController };
+export { UpdateUserAvatarController }

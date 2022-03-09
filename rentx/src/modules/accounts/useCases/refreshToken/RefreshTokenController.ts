@@ -5,14 +5,16 @@ import { container } from 'tsyringe'
 
 class RefreshTokenController {
   async handle(req: Request, res: Response) {
-    const token =
-      req.body.tokne || req.header['x-access-token'] || req.query.token
+    const refresh_token =
+      req.body.refresh_token ||
+      req.header['x-access-token'] ||
+      req.query.refresh_token
 
     const refreshTokenService = container.resolve(RefreshTokenService)
 
-    const refresh_token = refreshTokenService.execute(token)
+    const newRefreshToken = await refreshTokenService.execute(refresh_token)
 
-    return res.status(200).json(refresh_token)
+    return res.status(200).json({ refresh_token: newRefreshToken })
   }
 }
 

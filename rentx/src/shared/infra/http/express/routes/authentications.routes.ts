@@ -2,10 +2,11 @@ import { AuthenticateUserController } from '@modules/accounts/useCases/authentic
 import { RefreshTokenController } from '@modules/accounts/useCases/refreshToken/RefreshTokenController'
 
 import { Router } from 'express'
+import 'express-async-errors'
 
 const authenticationsRoutes = Router()
-const authenticateUserController = new AuthenticateUserController()
 const refreshTokenController = new RefreshTokenController()
+const authenticateUserController = new AuthenticateUserController()
 
 authenticationsRoutes.post('/', authenticateUserController.handle)
 authenticationsRoutes.post('/refresh-token', refreshTokenController.handle)

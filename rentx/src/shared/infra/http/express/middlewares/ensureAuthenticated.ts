@@ -8,28 +8,43 @@ import { NextFunction, Request, Response } from 'express'
 import 'express-async-errors'
 import { verify } from 'jsonwebtoken'
 
+interface IPayload {
+  sub: string
+}
+
 async function ensureAuthenticated(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) {
-  const authHeader = req.headers.authorization
+  const refresh_token = req.headers.authorization.split(' ')[1]
+
+  if (!refresh_token) throw new AppError('Missing refresh token', 400)
+
+  let user_id: string
+
+  try {
+    const { sub: payloadUserId } = verify(
+      refresh_token,
+      auth.refresh_token.secret
+    ) as IPayload
+
+    user_id = payloadUserId
+  } catch (error) {
+    throw new AppError('Invalid refresh_token', 401)
+  }
+
   const userTokensRepository = new UserTokensRepository()
 
-  if (!authHeader) throw new AppError('Missing Token', 401)
+  const foundUser = await userTokensRepository.findByUserIdAndRefreshToken({
+    user_id,
+    refresh_token
+  })
 
-  const token = authHeader.split(' ')[1]
+  if (!foundUser)
+    throw new AppError('Not found user with this refresh_token assigned', 404)
 
-  const { sub: subjectId } = verify(token, auth.refresh_token.secret)
-
-  const user = await userTokensRepository.findByUserIdAndRefreshToken(
-    subjectId as string,
-    token
-  )
-
-  if (!user) throw new AppError('User does not exists', 401)
-
-  req.user = { id: user.id }
+  req.user = { id: foundUser.user_id }
 
   next()
 }

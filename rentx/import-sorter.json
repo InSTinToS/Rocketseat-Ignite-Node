@@ -11,7 +11,7 @@
     "customOrderingRules": {
       "rules": [
         {
-          "type": "path",
+          "type": "path | dotenv/config",
           "regex": "^$",
           "orderLevel": 0,
           "disableSort": true

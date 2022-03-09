@@ -1,9 +1,15 @@
+import { UnitTypeShort } from 'dayjs'
+
+type DateNow = () => Date
+type ConvertToUTC = (date: Date) => string
+type AddDays = (days: number, unit: UnitTypeShort) => Date
+type Compare = (startDate: Date, endDate: Date, unit: UnitTypeShort) => number
+
 interface IDateProvider {
-  dateNow(): Date
-  addDays(days: number): Date
-  convertToUTC(date: Date): string
-  compareInDays(startDate: Date, endDate: Date): number
-  compareInHours(startDate: Date, endDate: Date): number
+  addDays: AddDays
+  compare: Compare
+  dateNow: DateNow
+  convertToUTC: ConvertToUTC
 }
 
-export { IDateProvider }
+export type { IDateProvider, AddDays, Compare, ConvertToUTC, DateNow }

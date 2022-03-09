@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
   PrimaryColumn
 } from 'typeorm'
@@ -19,23 +18,21 @@ class UserTokens {
   @Column()
   user_id: string
 
-  @Column()
-  refresh_token: string
-
-  @Column()
-  expires_date: Date
-
-  @CreateDateColumn()
-  created_at: Date
-
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User
 
+  @CreateDateColumn()
+  created_at: Date
+
+  @Column()
+  expires_date: Date
+
+  @Column()
+  refresh_token: string
+
   constructor() {
-    if (!this.id) {
-      this.id = uuid()
-    }
+    if (!this.id) this.id = uuid()
   }
 }
 

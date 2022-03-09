@@ -4,7 +4,6 @@ import { IUsersRepository } from '../../infra/typeorm/repositories/users/IUsersR
 import { AppError } from '@shared/errors/AppError'
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
 
-import { UserTokensRepository } from '@modules/accounts/infra/typeorm/repositories/userTokens/UserTokensRepository'
 import { IUserTokensRepository } from '@modules/accounts/infra/typeorm/repositories/userTokens/IUserTokensRepository'
 
 import auth from '@config/auth'
@@ -21,10 +20,7 @@ interface IRequest {
 interface IResponse {
   token: string
   refresh_token: string
-  user: {
-    name: User['name']
-    email: User['email']
-  }
+  user: { name: User['name']; email: User['email'] }
 }
 
 @injectable()
@@ -52,20 +48,21 @@ class AuthenticateUserService {
 
     const token = sign({}, auth.token.secret, {
       subject: user.id,
-      expiresIn: auth.token.expires_in
+      expiresIn: `${auth.token.expires_in}${auth.token.expires_unit}`
     })
 
     const refresh_token = sign({ email }, auth.refresh_token.secret, {
       subject: user.id,
-      expiresIn: auth.refresh_token.expires_in
+      expiresIn: `${auth.refresh_token.expires_in}${auth.refresh_token.expires_unit}`
     })
 
     await this.usersTokensRepository.create({
-      id: user.id,
+      refresh_token,
+      user_id: user.id,
       expires_date: this.dateProvider.addDays(
-        auth.refresh_token.expires_in_days
-      ),
-      refresh_token
+        auth.refresh_token.expires_in,
+        auth.refresh_token.expires_unit
+      )
     })
 
     return {

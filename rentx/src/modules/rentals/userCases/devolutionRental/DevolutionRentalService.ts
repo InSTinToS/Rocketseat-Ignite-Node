@@ -34,11 +34,11 @@ class DevolutionRentalService {
     const minimumDaily = 1
     const dateNow = this.dateProvider.dateNow()
 
-    let daily = this.dateProvider.compareInDays(rental.start_date, dateNow)
+    let daily = this.dateProvider.compare(rental.start_date, dateNow, 'd')
     if (daily <= 0) daily = minimumDaily
 
     let total = 0
-    const delay = this.dateProvider.compareInDays(dateNow, rental.expected_date)
+    const delay = this.dateProvider.compare(dateNow, rental.expected_date, 'd')
 
     if (delay > 0) {
       const calculateFine = delay * car.fine_amount

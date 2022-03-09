@@ -42,9 +42,10 @@ class CreateRentalService {
     if (rentalOpenToUser)
       throw new AppError("There's a rental in progress for this user")
 
-    const compare = this.dateProvider.compareInHours(
+    const compare = this.dateProvider.compare(
       this.dateProvider.dateNow(),
-      expected_date
+      expected_date,
+      'h'
     )
 
     const minHour = 24

@@ -1,4 +1,10 @@
-import { IDateProvider } from '../../IDateProvider'
+import {
+  AddDays,
+  Compare,
+  ConvertToUTC,
+  DateNow,
+  IDateProvider
+} from '../../IDateProvider'
 
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -7,30 +13,14 @@ import 'reflect-metadata'
 dayjs.extend(utc)
 
 class DayjsDateProvider implements IDateProvider {
-  addDays(days: number): Date {
-    return dayjs().add(days, 'days').toDate()
-  }
-  compareInDays(startDate: Date, endDate: Date): number {
-    return dayjs(this.convertToUTC(endDate)).diff(
-      this.convertToUTC(startDate),
-      'days'
-    )
-  }
+  dateNow: DateNow = () => dayjs().toDate()
 
-  convertToUTC(date: Date) {
-    return dayjs(date).utc().local().format()
-  }
+  addDays: AddDays = (days, unit) => dayjs().add(days, unit).toDate()
 
-  compareInHours(startDate: Date, endDate: Date): number {
-    return dayjs(this.convertToUTC(endDate)).diff(
-      this.convertToUTC(startDate),
-      'hours'
-    )
-  }
+  convertToUTC: ConvertToUTC = date => dayjs(date).utc().local().format()
 
-  dateNow() {
-    return dayjs().toDate()
-  }
+  compare: Compare = (startDate, endDate, unit) =>
+    dayjs(this.convertToUTC(endDate)).diff(this.convertToUTC(startDate), unit)
 }
 
 export { DayjsDateProvider }

@@ -18,7 +18,7 @@ jest.setTimeout(60000)
 
 describe('Read Categories Controller', () => {
   beforeAll(async () => {
-    connection = await createConnection()
+    connection = await createDBConnection()
     await connection.runMigrations()
 
     const password = await hash(admin.password, 8)

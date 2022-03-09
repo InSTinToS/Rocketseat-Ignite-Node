@@ -1,4 +1,5 @@
 import {
+  FindByUserIdAndRefreshToken,
   ICreateUserTokenDTO,
   IUserTokensRepository
 } from './IUserTokensRepository'
@@ -17,16 +18,10 @@ class UserTokensRepository implements IUserTokensRepository {
     await this.repository.delete(id)
   }
 
-  async findByUserIdAndRefreshToken(
-    user_id: string,
-    refresh_token: string
-  ): Promise<UserTokens> {
-    const userToken = await this.repository.findOne({
-      user_id,
-      refresh_token
-    })
+  findByUserIdAndRefreshToken: FindByUserIdAndRefreshToken = async data => {
+    const user = await this.repository.findOne(data)
 
-    return userToken
+    return user
   }
 
   async create(data: ICreateUserTokenDTO) {

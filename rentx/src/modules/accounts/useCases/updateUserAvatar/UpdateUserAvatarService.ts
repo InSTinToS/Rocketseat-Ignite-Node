@@ -19,8 +19,8 @@ class UpdateUserAvatarService {
 
   async execute({ avatar, userId }: IRequest): Promise<void> {
     const user = await this.usersRepository.findById(userId)
+    user?.avatar && (await deleteFile(user.avatar))
 
-    user.avatar && (await deleteFile(user.avatar))
     user.avatar = avatar
 
     await this.usersRepository.create(user)

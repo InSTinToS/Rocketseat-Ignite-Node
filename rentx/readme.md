@@ -1,110 +1,76 @@
-### Requisitos Rentx
+# Autenticação com token JWT
 
 ---
 
-#### Cadastro de carro
+## Objetivo
 
-**RF**
-Deve ser possível cadastrar um carro.
+- Enviar informações entre terceiros proibindo alterações mas permitindo visualização.
 
-**RN**
-Não deve ser possível cadastrar um carro com uma placa já existente.
-Não deve ser possível alterar a placa de um carro já cadastrado.
-O Carro deve ser cadastrado com disponibilidade "true" por padrão.
-Somente um usuário administrador pode cadastrar um carro.
+- Para se manter autenticado após o login, o token garante quem é o usuário (se o token não for repassado para outra pessoa).
 
 ---
 
-#### Cadastro da imagens do carro
+## Encode vs Encrypt
 
-**RF**
-Deve ser possível cadastrar a imagem carro.
+- Encode (Codificar): Transformar um valor em um código afim de ser descodificado (decode) por outro meio.
 
-**RN**
-O usuário deve poder cadastrar mais de uma imagem para o mesmo carro.
-Somente um administrador pode cadastrar imagens para um carro.
-
-**RNF**
-Utilizar biblioteca multer para upload de arquivos.
+- Encrypt (Criptografar): Transformar um valor em um código que só pode ser descriptografado (decrypt) se possuir uma chave de descriptografia (secret);
 
 ---
 
-#### Aluguel de carro
+## Como funciona
 
-**RF**
-Deve ser possível cadastrar um aluguel.
+- O JWT é composto por Header (Encode), Payload (Encode) e Signature mistura do header, payload e secret criptografados (Encrypt).
 
-**RN**
-Duração do aluguel deve ter no mínimo 24 hora.
-Não deve possível cadastrar mais de um aluguel para um carro ao mesmo tempo.
-Não deve possível cadastrar mais de um aluguel para um usuário ao mesmo tempo.
+- Como o Header e o Payload são codificados eles podem ser descodificados por qualquer meio mesmo sem utilizar o secret.
 
----
+- Então para que serve o secret? Ao receber o token jwt afim de valida-lo é preciso criar um novo signature com o header e payload recebidos mais o secret armazenado internamente, se o novo signature for igual ao recebido então o token é válido.
 
-#### Cadastro de especificação
-
-**RF**
-Deve ser possível cadastrar uma especificação para um carro.
-
-**RN**
-O carro precisa estar cadastrado.
-Um carro não pode ter duas especificações iguais.
-Somente um usuário administrador pode cadastrar uma especificação.
+- As informações do jwt PODEM ser vistas mas NÃO PODEM ser alteradas sem o SECRET (podem ser alteradas mas resultará em um error no servidor) se um token for recebido com o subject 123 e o usuário alterar para 321 sem utilizar o secret o código será diferente.
 
 ---
 
-#### Listagem e filtros
+## Criar usuário com senha criptografada
 
-**RF**
+POST - '/user' req.body = { email, password }
 
-<details>
-  <summary>Deve ser possível listar.</summary>
-  
-  <ul>
-    <li>todas as especificações.</li>
-    <li>todos os carros disponíveis.</li>
-    <li>todas as categorias.</li>
-  </ul> 
-</details>
+- 1: Verificar se e-mail ja não existe
 
-<details>
-  <summary>Deve ser possível listar os carros filtrando por.</summary>
-  
-  <ul>
-    <li>nome da categoria.</li>
-    <li>marca.</li>
-    <li>nome do carro.</li>
-  </ul> 
-</details>
+- 2: Criar senha criptografada baseada na senha recebida
 
-<br/>
+  - 2.1: Usando bcrypt
+    `const encryptedPassword = await hash(password, salt)`
 
-**RN**
-Não é preciso estar autenticado.
+- 3: Criar usuário com a senha criptografada e o resto dos dados e enviar ao banco.
 
-**RF-2**
+---
 
-<details>
-  <summary>Deve ser possível listar.</summary>
-  
-  <ul>
-    <li>todos os carros.</li>
-  </ul> 
-</details>
+## Verificar senha criptografada (Fazer login) & Assinar/Criar token JWT
 
-<details>
-  <summary>Deve ser possível listar os carros filtrando por.</summary>
-  
-  <ul>
-    <li>disponibilidade</li>
-    <li>nome da categoria.</li>
-    <li>marca.</li>
-    <li>nome do carro.</li>
-  </ul> 
-</details>
+POST -> '/sessions' req.body = { email, password }
 
-<br/>
+- 1: Encontrar usuário pelo email.
 
-**RN-2**
-É preciso estar autenticado.
-O usuário deve ser um administrador para listar e filtrar todos os carros.
+- 2: Comparar senha do usuário com a senha criptografada criada na criação de usuário.
+
+  - 2.1: usando bcrypt com password sendo a senha recebida na req.body e user.password a senha do usuário armazenado no banco.
+    `const passwordIsValid = await compare(password, user.password)`
+
+- 3: Criar JWT
+
+  - 3.1: usando jsonwebtoken com secret armazenado em um lugar seguro (.env).
+    `const token = sign({}, auth.token.secret, { subject: user.id, expiresIn: auth.token.expires_in })`
+
+- 4: Retornar o token
+
+---
+
+## Autorização a uma rota
+
+- 1: Em request.headers.authorization enviar o \`Bearer token\` onde token é o token jwt recebido na autenticação.
+
+- 2: Verificar se o token é válido
+
+- 3: Prosseguir
+
+---
