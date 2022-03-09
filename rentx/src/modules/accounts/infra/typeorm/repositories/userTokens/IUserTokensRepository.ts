@@ -15,8 +15,11 @@ type FindByUserIdAndRefreshToken = (
   data: IFindByUserIdAndRefreshTokenDTO
 ) => Promise<UserTokens>
 
+type FindByRefreshToken = (token: string) => Promise<UserTokens>
+
 interface IUserTokensRepository {
   deleteById(id: string): Promise<void>
+  findByRefreshToken: FindByRefreshToken
   create(data: ICreateUserTokenDTO): Promise<UserTokens>
   findByUserIdAndRefreshToken: FindByUserIdAndRefreshToken
 }
@@ -24,5 +27,6 @@ interface IUserTokensRepository {
 export type {
   IUserTokensRepository,
   ICreateUserTokenDTO,
-  FindByUserIdAndRefreshToken
+  FindByUserIdAndRefreshToken,
+  FindByRefreshToken
 }

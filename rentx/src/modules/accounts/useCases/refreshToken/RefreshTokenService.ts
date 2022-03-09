@@ -60,7 +60,7 @@ class RefreshTokenService {
     await this.userTokensRepository.create({
       user_id,
       refresh_token: newRefreshToken,
-      expires_date: this.dateProvider.addDays(
+      expires_date: this.dateProvider.addTime(
         auth.refresh_token.expires_in,
         auth.refresh_token.expires_unit
       )
