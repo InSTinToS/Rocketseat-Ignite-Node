@@ -1,8 +1,8 @@
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 
-import { CreateRentalController } from '@modules/rentals/userCases/createRental/CreateRentalController'
-import { DevolutionRentalController } from '@modules/rentals/userCases/devolutionRental/DevolutionRentalController'
-import { ReadRentalsByUserController } from '@modules/rentals/userCases/readRentalsByUser/ReadRentalsByUserController'
+import { CreateRentalController } from '@modules/rentals/useCases/createRental/CreateRentalController'
+import { DevolutionRentalController } from '@modules/rentals/useCases/devolutionRental/DevolutionRentalController'
+import { ReadRentalsByUserController } from '@modules/rentals/useCases/readRentalsByUser/ReadRentalsByUserController'
 
 import { Router } from 'express'
 

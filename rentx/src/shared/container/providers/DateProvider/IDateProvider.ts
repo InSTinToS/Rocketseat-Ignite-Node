@@ -15,10 +15,10 @@ interface IDateProvider {
 }
 
 export type {
-  IDateProvider,
   AddTime,
   Compare,
-  ConvertToUTC,
   DateNow,
-  IsBeforeDate
+  IsBeforeDate,
+  ConvertToUTC,
+  IDateProvider
 }

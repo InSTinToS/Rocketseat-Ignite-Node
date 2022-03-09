@@ -6,8 +6,6 @@ interface Token {
   expires_unit: UnitTypeShort
 }
 
-console.log(process.env.JWT_TOKEN_SECRET, process.env.JWT_REFRESH_TOKEN_SECRET)
-
 interface Auth {
   token: Token
   refresh_token: Token

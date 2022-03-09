@@ -17,15 +17,16 @@ let dateProvider: IDateProvider
 
 describe('Authenticate user', () => {
   beforeEach(() => {
+    dateProvider = new DayjsDateProvider()
     usersRepositoryInMemory = new UsersRepositoryInMemory()
     userTokensRepositoryInMemory = new UserTokensRepositoryInMemory()
-    dateProvider = new DayjsDateProvider()
 
     authenticateUserService = new AuthenticateUserService(
       usersRepositoryInMemory,
       userTokensRepositoryInMemory,
       dateProvider
     )
+
     createUserService = new CreateUserService(usersRepositoryInMemory)
   })
 

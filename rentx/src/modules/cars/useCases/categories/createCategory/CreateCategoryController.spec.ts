@@ -4,7 +4,7 @@ import createDBConnection from '@shared/infra/database/postgres/typeorm'
 
 import { hash } from 'bcrypt'
 import request from 'supertest'
-import { Connection, createConnection } from 'typeorm'
+import { Connection } from 'typeorm'
 import { v4 } from 'uuid'
 
 let connection: Connection
@@ -36,7 +36,7 @@ describe('Create category controller', () => {
   it('should be able to create a new category', async () => {
     const responseToken = await request(app).post('/sessions').send(admin)
 
-    const { token } = responseToken.body
+    const { refresh_token } = responseToken.body
 
     const reqData = {
       name: 'Category supertest',
@@ -46,7 +46,7 @@ describe('Create category controller', () => {
     const res = await request(app)
       .post('/categories')
       .send(reqData)
-      .set({ Authorization: `Bearer ${token}` })
+      .set({ Authorization: `Bearer ${refresh_token}` })
 
     expect(res.status).toBe(201)
   })

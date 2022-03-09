@@ -37,7 +37,7 @@ describe('Read Categories Controller', () => {
 
   it('should be able to read all categories', async () => {
     const {
-      body: { token }
+      body: { refresh_token }
     } = await request(app).post('/sessions').send(admin)
 
     const reqData = {
@@ -48,7 +48,7 @@ describe('Read Categories Controller', () => {
     await request(app)
       .post('/categories')
       .send(reqData)
-      .set({ Authorization: 'Bearer ' + token })
+      .set({ Authorization: 'Bearer ' + refresh_token })
 
     const res = await request(app).get('/categories')
 

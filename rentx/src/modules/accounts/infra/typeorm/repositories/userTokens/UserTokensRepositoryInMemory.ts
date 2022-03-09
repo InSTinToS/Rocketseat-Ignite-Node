@@ -1,4 +1,5 @@
 import {
+  FindByRefreshToken,
   FindByUserIdAndRefreshToken,
   ICreateUserTokenDTO,
   IUserTokensRepository
@@ -7,6 +8,9 @@ import { UserTokens } from '../../models/UserTokens'
 
 class UserTokensRepositoryInMemory implements IUserTokensRepository {
   private userTokens: UserTokens[] = []
+
+  findByRefreshToken: FindByRefreshToken = async refresh_token =>
+    this.userTokens.find(userToken => userToken.refresh_token === refresh_token)
 
   findByUserIdAndRefreshToken: FindByUserIdAndRefreshToken = async ({
     refresh_token,
@@ -19,7 +23,11 @@ class UserTokensRepositoryInMemory implements IUserTokensRepository {
     )
 
   async deleteById(id: string): Promise<void> {
-    this.userTokens = this.userTokens.filter(userToken => userToken.id !== id)
+    const foundUserToken = this.userTokens.find(
+      userToken => userToken.id === id
+    )
+
+    this.userTokens.splice(this.userTokens.indexOf(foundUserToken))
   }
 
   async create(data: ICreateUserTokenDTO): Promise<UserTokens> {
