@@ -7,6 +7,7 @@ class User {
   password: string
   created_at: Date
   driver_license: string
+  avatar_url: () => string
 }
 
 export { User }

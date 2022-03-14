@@ -20,7 +20,8 @@ class ReadUserService {
       return UserMap.toDTO(foundUser)
     } else {
       const users = await this.usersRepository.read()
-      return users
+      const usersDTO = users.map(user => UserMap.toDTO(user))
+      return usersDTO
     }
   }
 }

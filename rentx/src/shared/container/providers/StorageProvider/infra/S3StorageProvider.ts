@@ -16,6 +16,7 @@ class S3StorageProvider implements IStorageProvider {
 
   save: TSave = async (file, folder) => {
     const originalName = resolve(upload.tempFolder, file)
+    console.log(originalName)
     const fileContent = await fs.promises.readFile(originalName)
 
     await this.client

@@ -20,6 +20,7 @@ const ensureAuthenticated = async (
     const { sub: user_id } = verify(token, auth.token.secret)
     req.user = { id: String(user_id) }
   } catch (error) {
+    console.log(error)
     throw new AppError('Invalid refresh_token', 401)
   }
 

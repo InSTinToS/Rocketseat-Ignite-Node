@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import multer from 'multer'
 import { resolve } from 'path'
 
-const tempFolder = resolve(__dirname, '../', 'temp')
+const tempFolder = resolve(__dirname, '../', 'temp/')
 
 const upload = {
   tempFolder,

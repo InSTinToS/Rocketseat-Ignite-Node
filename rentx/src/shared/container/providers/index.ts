@@ -20,5 +20,7 @@ container.registerSingleton<IMailProvider>(
 
 container.registerSingleton<IStorageProvider>(
   'StorageProvider',
-  process.env.LOCAL_STORAGE ? LocalStorageProvider : S3StorageProvider
+  process.env.LOCAL_STORAGE === 'true'
+    ? LocalStorageProvider
+    : S3StorageProvider
 )

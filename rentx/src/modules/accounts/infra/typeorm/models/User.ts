@@ -29,12 +29,12 @@ class User {
   driver_license: string
 
   @Expose({ name: 'avatar_url' })
-  getAvatarURL(): string {
-    if (process.env.LOCAL_STORAGE) {
-      return `${process.env.BASE_URL}/avatar/${this.avatar}`
-    } else {
-      return `${process.env.AWS_BUCKER_URL}/avatar/${this.avatar}`
-    }
+  avatar_url(): string {
+    const avatarUrl = `/avatar/${this.avatar}`
+
+    return process.env.LOCAL_STORAGE === 'true'
+      ? `${process.env.BASE_URL}${avatarUrl}`
+      : `${process.env.AWS_BUCKET_URL}${avatarUrl}`
   }
 
   constructor() {

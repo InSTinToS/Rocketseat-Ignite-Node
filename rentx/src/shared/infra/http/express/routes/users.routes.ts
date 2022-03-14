@@ -10,12 +10,12 @@ import { Router } from 'express'
 import multer from 'multer'
 
 const usersRoutes = Router()
-const readUserController = new ReadUserController()
 const upload = multer(uploadConfig)
+const readUserController = new ReadUserController()
 const createUserController = new CreateUserController()
 const updateUserAvatarController = new UpdateUserAvatarController()
 
-usersRoutes.get('/:id', readUserController.handle)
+usersRoutes.get('/:id?', readUserController.handle)
 
 usersRoutes.post('/', createUserController.handle)
 

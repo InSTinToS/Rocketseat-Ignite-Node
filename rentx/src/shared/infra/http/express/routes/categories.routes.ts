@@ -11,7 +11,7 @@ import { Router } from 'express'
 import multer from 'multer'
 
 const categoriesRoutes = Router()
-const upload = multer(uploadConfig('./temp/categories'))
+const upload = multer(uploadConfig)
 const createCategoryController = new CreateCategoryController()
 const importCategoryController = new ImportCategoryController()
 const readCategoriesController = new ReadCategoriesController()

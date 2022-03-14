@@ -2,33 +2,27 @@ import { User } from '@modules/accounts/models/User'
 
 import { instanceToInstance } from 'class-transformer'
 
-interface IUserReponseDTO {
-  email: string
-  name: string
+interface IUserResponseDTO {
   id: string
+  name: string
+  email: string
   avatar: string
+  avatar_url(): string
   driver_license: string
 }
 
-class UserMap {
-  static toDTO({
-    email,
-    name,
-    id,
-    avatar,
-    driver_license
-  }: User): IUserReponseDTO {
-    const user = instanceToInstance({
-      email,
-      name,
-      id,
-      avatar,
-      driver_license,
-      avatar_url: avatar
-    })
+type TToDTO = (data: User) => IUserResponseDTO
 
-    return user
-  }
+class UserMap {
+  static toDTO: TToDTO = ({
+    avatar,
+    avatar_url,
+    driver_license,
+    name,
+    email,
+    id
+  }) =>
+    instanceToInstance({ id, avatar, avatar_url, driver_license, name, email })
 }
 
 export { UserMap }

@@ -1,4 +1,5 @@
 import { IStorageProvider } from '@shared/container/providers/StorageProvider/IStorageProvider'
+import { AppError } from '@shared/errors/AppError'
 
 import { User } from '@modules/accounts/models/User'
 import { IUsersRepository } from '@modules/accounts/repositories/users/IUsersRepository.types'
@@ -22,6 +23,8 @@ class UpdateUserAvatarService {
 
   async execute({ avatar, userId }: IRequest): Promise<void> {
     const user = await this.usersRepository.findById(userId)
+
+    if (!user) throw new AppError('User not found')
 
     user?.avatar && (await this.storageProvider.delete(user.avatar, 'avatar'))
 
