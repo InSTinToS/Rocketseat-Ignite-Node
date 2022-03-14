@@ -1,5 +1,5 @@
-import { ResetPasswordController } from '@modules/accounts/useCases/resetPassword/ResetPasswordController'
-import { SendForgotPasswordMailController } from '@modules/accounts/useCases/sendForgotPasswordMail/SendForgotPasswordMailController'
+import { ResetPasswordController } from '@modules/accounts/infra/useCases/resetPassword/ResetPasswordController'
+import { SendForgotPasswordMailController } from '@modules/accounts/infra/useCases/sendForgotPasswordMail/SendForgotPasswordMailController'
 
 import { Router } from 'express'
 

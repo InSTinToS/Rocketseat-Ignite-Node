@@ -1,27 +1,29 @@
-import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/users/UsersRepository'
+import 'express-async-errors'
+
+import { AppError } from '@shared/errors/AppError'
+
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
 
 import { NextFunction, Request, Response } from 'express'
-import 'express-async-errors'
 import { verify } from 'jsonwebtoken'
 
-async function verifyAuthenticated(
+const verifyAuthenticated = async (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
-) {
-  const authHeader = req.headers?.authorization
-  const token = authHeader.split(' ')[1]
+) => {
+  const token = req.headers?.authorization.split(' ')[1]
 
-  if (token) {
-    const { sub: subjectId } = verify(token, 'secret', {})
+  if (!token) throw new AppError('Token is missing')
 
-    const usersRepository = new UsersRepository()
-    const user = await usersRepository.findById(subjectId as string)
+  const { sub: user_id } = verify(token, 'secret', {})
 
-    if (!user) return next()
+  const usersRepository = new UsersRepository()
+  const user = await usersRepository.findById(String(user_id))
 
-    req.user = { id: user.id }
-  }
+  if (!user) return next()
+
+  req.user = { id: user.id }
 
   return next()
 }

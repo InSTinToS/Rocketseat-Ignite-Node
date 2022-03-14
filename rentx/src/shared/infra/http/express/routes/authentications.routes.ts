@@ -1,8 +1,9 @@
-import { AuthenticateUserController } from '@modules/accounts/useCases/authentications/AuthenticateUserController'
-import { RefreshTokenController } from '@modules/accounts/useCases/refreshToken/RefreshTokenController'
+import 'express-async-errors'
+
+import { AuthenticateUserController } from '@modules/accounts/infra/useCases/authentications/AuthenticateUserController'
+import { RefreshTokenController } from '@modules/accounts/infra/useCases/refreshToken/RefreshTokenController'
 
 import { Router } from 'express'
-import 'express-async-errors'
 
 const authenticationsRoutes = Router()
 const refreshTokenController = new RefreshTokenController()

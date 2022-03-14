@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer'
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm'
 import { v4 as uuid } from 'uuid'
 
@@ -26,6 +27,15 @@ class User {
 
   @Column()
   driver_license: string
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarURL(): string {
+    if (process.env.LOCAL_STORAGE) {
+      return `${process.env.BASE_URL}/avatar/${this.avatar}`
+    } else {
+      return `${process.env.AWS_BUCKER_URL}/avatar/${this.avatar}`
+    }
+  }
 
   constructor() {
     if (!this.id) this.id = uuid()

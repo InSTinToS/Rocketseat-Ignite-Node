@@ -20,7 +20,7 @@ const uploadCarImageController = new UploadCarImageController()
 const createCarSpecificationsController =
   new CreateCarSpecificationsController()
 
-const uploadCarImage = multer(upload('./temp/cars'))
+const uploadCarImage = multer(upload)
 
 carsRoutes.post(
   '/images/:id',
