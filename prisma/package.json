@@ -1,0 +1,14 @@
+{
+  "name": "prisma",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "docker-prune": "docker-compose down && docker system prune -a -f --volumes",
+    "dev": "ts-node-dev --poll --respawn -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/server.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.11.0",
+    "prisma": "^3.11.0"
+  }
+}
